@@ -1,0 +1,8 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: prometheus,health
+
+target:
+  services: "http://localhost:8081,http://localhost:8082,http://localhost:8083"
