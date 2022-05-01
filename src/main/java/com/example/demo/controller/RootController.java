@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.dto.Sorting;
 import com.example.demo.dto.SortingResponse;
 import com.example.demo.util.SortingUtil;
+import io.micrometer.core.instrument.MeterRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,9 +33,13 @@ public class RootController {
   @Value("${target.services}")
   private String targetServices;
 
+  private final MeterRegistry meterRegistry;
+
   @Autowired
-  public RootController(final WebClient.Builder webClientBuilder) {
+  public RootController(final WebClient.Builder webClientBuilder,
+      final MeterRegistry meterRegistry) {
     this.webClientBuilder = webClientBuilder;
+    this.meterRegistry = meterRegistry;
   }
 
   @PostMapping("/sorting")
@@ -42,6 +47,8 @@ public class RootController {
     if(sorting.getArraySize() == null || sorting.getArraySize() < 0) {
       return ResponseEntity.badRequest().build();
     }
+
+    meterRegistry.counter("demo.request.counter.total").increment();
 
     LOGGER.info("Received sorting request with array size {}", sorting.getArraySize());
 
@@ -55,6 +62,8 @@ public class RootController {
   @PostMapping(value = "/delegated/sorting")
   public ResponseEntity<SortingResponse> delegatedSorting(@RequestBody Sorting sorting) throws URISyntaxException {
     long start = System.currentTimeMillis();
+
+    meterRegistry.counter("demo.request.counter.total").increment();
 
     if(sorting.getArraySize() == null || sorting.getArraySize() < 0) {
       return ResponseEntity.badRequest().build();
