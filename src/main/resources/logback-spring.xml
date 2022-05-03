@@ -10,26 +10,26 @@
         </encoder>
     </appender>
 
-    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <encoder>
-            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
-        </encoder>
-        <file>${LOGS}/roundtable-spring-native.log</file>
-        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-            <param name="FileNamePattern" value="${LOGS}/roundtable-spring-native.log.%i"/>
-            <param name="MinIndex" value="1"/>
-            <param name="MaxIndex" value="20"/>
-        </rollingPolicy>
-        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
-            <MaxFileSize>500000000</MaxFileSize>
-        </triggeringPolicy>
-        <append>true</append>
-        <immediateFlush>false</immediateFlush>
-    </appender>
+<!--    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+<!--        <encoder>-->
+<!--            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>-->
+<!--        </encoder>-->
+<!--        <file>${LOGS}/roundtable-spring-native.log</file>-->
+<!--        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">-->
+<!--            <param name="FileNamePattern" value="${LOGS}/roundtable-spring-native.log.%i"/>-->
+<!--            <param name="MinIndex" value="1"/>-->
+<!--            <param name="MaxIndex" value="20"/>-->
+<!--        </rollingPolicy>-->
+<!--        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">-->
+<!--            <MaxFileSize>500000000</MaxFileSize>-->
+<!--        </triggeringPolicy>-->
+<!--        <append>true</append>-->
+<!--        <immediateFlush>false</immediateFlush>-->
+<!--    </appender>-->
 
     <root level="INFO">
         <appender-ref ref="STDOUT" />
-        <appender-ref ref="FILE" />
+<!--        <appender-ref ref="FILE" />-->
     </root>
 
 </configuration>
