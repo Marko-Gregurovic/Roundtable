@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
@@ -22,6 +23,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Controller
+@RequestMapping("/v1")
 public class RootController {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(RootController.class);
@@ -83,13 +85,13 @@ public class RootController {
         .build();
     randomServiceClient
         .post()
-        .uri("/sorting")
+        .uri("/v1/sorting")
         .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
         .body(Mono.just(sorting), Sorting.class)
         .retrieve()
         .bodyToMono(SortingResponse.class)
         .subscribe();
-    LOGGER.info("Sent sorting request to {} with array size {}", services.get(randomIndex), sorting.getArraySize());
+    LOGGER.info("Sent sorting request to {} with array size {}", services.get(randomIndex) + "/v1/sorting", sorting.getArraySize());
 
     long end = System.currentTimeMillis();
     LOGGER.info("Async method finished in {} milliseconds", end - start);
